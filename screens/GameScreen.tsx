@@ -1,16 +1,14 @@
 import React, { useState } from "react";
-import { Text, StyleSheet, View, Alert } from "react-native";
+import { Text, StyleSheet, View } from "react-native";
 import BackgroundBeauty from "../components/BackgroundBeauty";
-import AppButton from "../components/AppButton";
+import GameScreenButton from "../components/GameScreenButton";
+import SendAlert from "../app-functions/SendAlert";
 
 export default function Main() {
     const [counter, setCounter] = useState<number>(0);
     const [number, setNumber] = useState<number>(
         Math.floor(Math.random() * 100) + 1
     );
-    const sendAlert = (title: string, message: string) => {
-        Alert.alert(title, message);
-    };
 
     const handlePress = (symbol: string): void => {
         const newNumber: number = Math.floor(Math.random() * 100) + 1;
@@ -26,7 +24,7 @@ export default function Main() {
             : (newCounter = 0);
 
         if (newCounter === 0)
-            sendAlert(
+            SendAlert(
                 "¡Has perdido!",
                 `Has fallado con ${record} aciertos.\n¡Vuelve a intentarlo!`
             );
@@ -50,7 +48,7 @@ export default function Main() {
                     </View>
                     <View style={styles.rowContainer}>
                         <View style={styles.buttonContainer}>
-                            <AppButton
+                            <GameScreenButton
                                 text="-"
                                 function={() => {
                                     handlePress("-");
@@ -61,7 +59,7 @@ export default function Main() {
                             <Text style={styles.mainText}>{number}</Text>
                         </View>
                         <View style={styles.buttonContainer}>
-                            <AppButton
+                            <GameScreenButton
                                 text="+"
                                 function={() => {
                                     handlePress("+");

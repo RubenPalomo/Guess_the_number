@@ -2,7 +2,7 @@ import React from "react";
 import { StatusBar } from "expo-status-bar";
 import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import Main from "./screens/Mains";
+import Main from "./screens/GameScreen";
 import Ranking from "./screens/Ranking";
 import Profile from "./screens/Profile";
 import Header from "./components/Header";
@@ -15,6 +15,7 @@ export default function App() {
         <NavigationContainer>
             <BottomTab.Navigator
                 initialRouteName="Main"
+                backBehavior="initialRoute"
                 screenOptions={{
                     tabBarShowLabel: true,
                     tabBarLabelStyle: { marginBottom: 15 },
@@ -44,7 +45,10 @@ export default function App() {
                                 size={props.focused ? 50 : 40}
                                 color={props.focused ? "gold" : "#B99C00"}
                                 style={
-                                    props.focused && { elevation: 28, marginBottom: -20 }
+                                    props.focused && {
+                                        elevation: 28,
+                                        marginBottom: -20,
+                                    }
                                 }
                             />
                         ),
@@ -55,14 +59,19 @@ export default function App() {
                     component={Main}
                     options={{
                         title: "Jugar",
-                        headerTitle:"Guess the number!",
+                        headerTitle: "Guess the number!",
                         tabBarActiveTintColor: "#404040",
                         tabBarIcon: (props) => (
                             <Entypo
                                 name="game-controller"
                                 size={props.focused ? 90 : 80}
                                 color={props.focused ? "gold" : "#B99C00"}
-                                style={props.focused && { elevation: 28, marginBottom: -20 }}
+                                style={
+                                    props.focused && {
+                                        elevation: 28,
+                                        marginBottom: -20,
+                                    }
+                                }
                             />
                         ),
                     }}
@@ -78,7 +87,12 @@ export default function App() {
                                 name="person"
                                 size={props.focused ? 50 : 40}
                                 color={props.focused ? "gold" : "#B99C00"}
-                                style={props.focused && { elevation: 28, marginBottom: -20 }}
+                                style={
+                                    props.focused && {
+                                        elevation: 28,
+                                        marginBottom: -20,
+                                    }
+                                }
                             />
                         ),
                     }}

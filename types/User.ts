@@ -1,5 +1,6 @@
 export default interface User {
-        username: string,
-        record: number,
-        soundsOn: boolean,
+    name: string;
+    record: number;
+    soundsOn: boolean;
+    stamina: number;
 }

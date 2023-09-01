@@ -15,7 +15,9 @@ export default function BackgroundBeauty(props: { screen: JSX.Element }) {
                 style={styles.backgroundImage}
                 imageStyle={{ opacity: 0.1 }}
             >
-                <KeyboardAvoidingView style={styles.container}>{props.screen}</KeyboardAvoidingView>
+                <KeyboardAvoidingView style={styles.container}>
+                    {props.screen}
+                </KeyboardAvoidingView>
             </ImageBackground>
         </LinearGradient>
     );

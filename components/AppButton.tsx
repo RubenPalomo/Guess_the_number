@@ -1,43 +1,39 @@
 import React from "react";
-import { View, Text, Pressable, StyleSheet } from "react-native";
-import { PlaySound } from "./PlaySound";
+import { Pressable, View, Text, StyleSheet } from "react-native";
 
-interface propsAppButton {
-    text: string;
-    function: () => void;
-}
-
-export default function AppButton(props: propsAppButton) {
+export default function AppButton(props: {
+    textButton: string;
+    functionButton: () => void;
+}) {
     return (
-        <View style={styles.buttonContainer}>
+        <View style={styles.appButtonContainer}>
             <Pressable
-                onPress={props.function}
-                onPressIn={() => {
-                    PlaySound(require("../assets/sounds/press-in.mp3"), false);
-                }}
+                style={styles.appButton}
                 android_ripple={{ color: "grey" }}
+                onPress={props.functionButton}
             >
-                <Text style={styles.buttonText}>{props.text}</Text>
+                <Text style={styles.appButtonText}>{props.textButton}</Text>
             </Pressable>
         </View>
     );
 }
 
 const styles = StyleSheet.create({
-    buttonContainer: {
-        justifyContent: "center",
-        alignContent: "center",
-        margin: 1,
+    appButtonContainer: {
         overflow: "hidden",
         borderRadius: 15,
+        width: "100%",
+        margin: 5,
     },
-    buttonText: {
-        color: "gold",
-        fontSize: 50,
-        borderWidth: 3,
-        borderColor: "gold",
+    appButton: {
+        padding: 20,
+        backgroundColor: "indigo",
         borderRadius: 15,
+        borderWidth: 2,
+    },
+    appButtonText: {
+        color: "gold",
         textAlign: "center",
-        textAlignVertical: "center",
+        fontSize: 15,
     },
 });
