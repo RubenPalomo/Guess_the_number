@@ -7,7 +7,7 @@ export default StyleSheet.create({
         color: "gold",
         textAlign: "center",
         textShadowColor: "black",
-        textShadowOffset: { width: 2, height: 2 },
+        textShadowOffset: { width: 3, height: 3 },
         textShadowRadius: 3,
         margin: "auto",
     },

@@ -2,7 +2,7 @@ import React from "react";
 import { StatusBar } from "expo-status-bar";
 import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import Main from "./screens/GameScreen";
+import MainScreen from "./screens/MainScreen";
 import Ranking from "./screens/Ranking";
 import Profile from "./screens/Profile";
 import Header from "./components/Header";
@@ -56,7 +56,7 @@ export default function App() {
                 />
                 <BottomTab.Screen
                     name={"Main"}
-                    component={Main}
+                    component={MainScreen}
                     options={{
                         title: "Jugar",
                         headerTitle: "Guess the number!",

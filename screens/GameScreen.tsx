@@ -4,7 +4,7 @@ import BackgroundBeauty from "../components/BackgroundBeauty";
 import GameScreenButton from "../components/GameScreenButton";
 import SendAlert from "../app-functions/SendAlert";
 
-export default function Main() {
+export default function GameScreen(props: { functionFinishGame: () => void }) {
     const [counter, setCounter] = useState<number>(0);
     const [number, setNumber] = useState<number>(
         Math.floor(Math.random() * 100) + 1
@@ -23,11 +23,13 @@ export default function Main() {
             ? (newCounter = counter + 1)
             : (newCounter = 0);
 
-        if (newCounter === 0)
+        if (newCounter === 0) {
             SendAlert(
                 "¡Has perdido!",
                 `Has fallado con ${record} aciertos.\n¡Vuelve a intentarlo!`
             );
+            props.functionFinishGame();
+        }
 
         setCounter(newCounter);
         setNumber(newNumber);
@@ -36,7 +38,7 @@ export default function Main() {
     return (
         <BackgroundBeauty
             screen={
-                <View style={styles.container}>
+                <View style={styles.gameScreenContainer}>
                     <View style={styles.counterContainer}>
                         <Text style={styles.counterText}>Rounds</Text>
                         <Text style={styles.counterText}>{counter}</Text>
@@ -74,7 +76,7 @@ export default function Main() {
 }
 
 const styles = StyleSheet.create({
-    container: {
+    gameScreenContainer: {
         flex: 1,
         alignItems: "center",
         justifyContent: "center",

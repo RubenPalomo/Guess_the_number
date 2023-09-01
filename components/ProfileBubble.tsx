@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Text, StyleSheet, View, Pressable } from "react-native";
+import { PlaySound } from "../app-functions/PlaySound";
 
 export default function ProfileBubble(props: {
     tag: string;
@@ -28,7 +29,13 @@ export default function ProfileBubble(props: {
 
     return (
         <View style={styles.bubbleContainer}>
-            <Pressable style={styles.bubbleTextContainer} onPress={handlePress}>
+            <Pressable
+                style={styles.bubbleTextContainer}
+                onPress={handlePress}
+                onPressIn={() => {
+                    PlaySound(require("../assets/sounds/press-in.mp3"), false);
+                }}
+            >
                 <Text style={styles.bubbleText}>{props.tag}: </Text>
                 {isSound ? (
                     isSoundOn ? (
