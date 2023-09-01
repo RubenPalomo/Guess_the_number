@@ -11,14 +11,14 @@ interface ChangeNameModalProps {
 }
 
 export default function ChangeNameModal(props: ChangeNameModalProps) {
-    const [textInputValue, setTextInputValue] = useState<string>("");
+    const [textInputValue, setTextInputValue] = useState<string>(props.oldName);
 
     const handleChangeName = () => {
         const textToSave = textInputValue.trim();
 
         if (textToSave.length > 10)
             SendAlert(
-                "Muy largo",
+                "Demasiado largo",
                 "El nombre debe de contener 10 caracteres como máximo"
             );
         else if (textToSave !== "") {
