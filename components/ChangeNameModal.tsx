@@ -4,14 +4,13 @@ import AppButton from "./AppButton";
 import SendAlert from "../app-functions/SendAlert";
 
 interface ChangeNameModalProps {
-    oldName: string;
     isModalVisible: boolean;
     changeModalVisibility: () => void;
     changeNameFunction: (newName: string) => void;
 }
 
 export default function ChangeNameModal(props: ChangeNameModalProps) {
-    const [textInputValue, setTextInputValue] = useState<string>(props.oldName);
+    const [textInputValue, setTextInputValue] = useState<string>("");
 
     const handleChangeName = () => {
         const textToSave = textInputValue.trim();
@@ -30,7 +29,7 @@ export default function ChangeNameModal(props: ChangeNameModalProps) {
 
     const handleCancel = () => {
         props.changeModalVisibility();
-        setTextInputValue(props.oldName);
+        setTextInputValue("");
     };
 
     return (

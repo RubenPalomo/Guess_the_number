@@ -1,15 +1,21 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Text, StyleSheet, View, Pressable } from "react-native";
 import { PlaySound } from "../app-functions/PlaySound";
 
 export default function ProfileBubble(props: {
     tag: string;
-    text: string;
+    name?: string;
+    sound?: boolean;
     functionChangeModalVisibility?: () => void;
     functionChangeSound?: (isSoundOn: boolean) => void;
 }) {
     const isSound = props.tag === "Sonido";
-    const [isSoundOn, setIsSoundOn] = useState<boolean>(props.text === "true");
+    const [isSoundOn, setIsSoundOn] = useState<boolean>(props.sound === true);
+
+    useEffect(() => {
+        setIsSoundOn(props.sound === true);
+    }),
+        [props.sound];
 
     const handlePressNameOption = (): void => {
         if (props.functionChangeModalVisibility)
@@ -50,7 +56,7 @@ export default function ProfileBubble(props: {
                         </Text>
                     )
                 ) : (
-                    <Text style={styles.bubbleText}>{props.text}</Text>
+                    <Text style={styles.bubbleText}>{props.name}</Text>
                 )}
             </Pressable>
         </View>

@@ -3,8 +3,16 @@ import { Text, StyleSheet, View } from "react-native";
 import BackgroundBeauty from "../components/BackgroundBeauty";
 import GameScreenButton from "../components/GameScreenButton";
 import SendAlert from "../app-functions/SendAlert";
+import { _updateUserData } from "../memory/InternalDataManager";
+import User from "../types/User";
 
-export default function GameScreen(props: { functionFinishGame: () => void }) {
+interface GameScreenProps {
+    user: User | null;
+    functionSetNewRecord: (newRecord: number) => void;
+    functionFinishGame: () => void;
+}
+
+export default function GameScreen(props: GameScreenProps) {
     const [counter, setCounter] = useState<number>(0);
     const [number, setNumber] = useState<number>(
         Math.floor(Math.random() * 100) + 1
@@ -28,6 +36,11 @@ export default function GameScreen(props: { functionFinishGame: () => void }) {
                 "¡Has perdido!",
                 `Has fallado con ${record} aciertos.\n¡Vuelve a intentarlo!`
             );
+            if (props.user && props.user.record < record) {
+                _updateUserData({ record: record });
+                props.functionSetNewRecord(record);
+            }
+
             props.functionFinishGame();
         }
 

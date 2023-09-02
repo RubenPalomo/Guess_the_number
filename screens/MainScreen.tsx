@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { View, Text, StyleSheet, BackHandler } from "react-native";
 import * as Animatable from "react-native-animatable";
 import GameScreen from "./GameScreen";
@@ -7,27 +7,46 @@ import TitleTextStyle from "../components/TitleTextStyle";
 import AppButton from "../components/AppButton";
 import User from "../types/User";
 import SendAlert from "../app-functions/SendAlert";
+import {
+    _updateUserData,
+    _retrieveUserData,
+} from "../memory/InternalDataManager";
 
-export default function MainScreen() {
-    const [stamina, setStamina] = useState<number>(1);
+export default function MainScreen(props: { user: User }) {
+    const [user, setUser] = useState<User | null>(null);
     const [isGameStarted, setIsGameStarted] = useState<boolean>(false);
 
-    const [user, setUser] = useState<User>({
-        name: "Sarandonga",
-        record: 5,
-        soundsOn: true,
-        stamina: 3,
-    });
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const storedUser = await _retrieveUserData();
+                setUser(storedUser);
+                setRecord(storedUser.record);
+            } catch (error: any) {
+                SendAlert("Error", error.toString());
+            }
+        };
+        fetchData();
+    }, []);
+
+    const [record, setRecord] = useState<number>(user?.record ?? 0);
 
     const handleStart = (): void => {
-        if (stamina > 0) {
+        if (user === null) return;
+        if (user.stamina > 0) {
             setIsGameStarted(true);
-            setStamina(stamina - 1);
+            const updatedUser = { ...user, stamina: user.stamina - 1 };
+            _updateUserData(updatedUser);
+            setUser(updatedUser);
         } else SendAlert("¡Sin estamina!", "No tienes suficiente estamina");
     };
 
     return isGameStarted ? (
-        <GameScreen functionFinishGame={() => setIsGameStarted(false)} />
+        <GameScreen
+            user={user}
+            functionSetNewRecord={(newRecord: number) => setRecord(newRecord)}
+            functionFinishGame={() => setIsGameStarted(false)}
+        />
     ) : (
         <BackgroundBeauty
             screen={
@@ -45,7 +64,7 @@ export default function MainScreen() {
                             Play now!
                         </Animatable.Text>
                     </View>
-                    <Text style={styles.recordText}>Record: {user.record}</Text>
+                    <Text style={styles.recordText}>Record: {record}</Text>
                     <View style={styles.mainButtonsContainer}>
                         <AppButton
                             textButton="Empezar nuevo juego"

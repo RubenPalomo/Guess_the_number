@@ -3,7 +3,7 @@ import * as Device from "expo-device";
 import { Platform } from "react-native";
 
 export const getToken = async () => {
-    let token: string;
+    let token: string = "";
 
     if (Platform.OS === "android") {
         await Notifications.setNotificationChannelAsync("default", {
