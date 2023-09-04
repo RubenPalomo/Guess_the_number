@@ -1,25 +1,22 @@
 import React, { useState } from "react";
 import { Text, StyleSheet, View } from "react-native";
+import { useUser } from "../context/UserContext";
 import BackgroundBeauty from "../components/BackgroundBeauty";
 import GameScreenButton from "../components/GameScreenButton";
 import SendAlert from "../app-functions/SendAlert";
-import { _updateUserData } from "../memory/InternalDataManager";
-import User from "../types/User";
 
 interface GameScreenProps {
-    user: User | null;
-    functionSetNewRecord: (newRecord: number) => void;
     functionFinishGame: () => void;
 }
 
 export default function GameScreen(props: GameScreenProps) {
+    const { user, setUser } = useUser();
     const [counter, setCounter] = useState<number>(0);
-    const [number, setNumber] = useState<number>(
-        Math.floor(Math.random() * 100) + 1
-    );
+    const generateRandom = () => Math.floor(Math.random() * 100) + 1;
+    const [number, setNumber] = useState<number>(generateRandom());
 
     const handlePress = (symbol: string): void => {
-        const newNumber: number = Math.floor(Math.random() * 100) + 1;
+        const newNumber: number = Math.floor(generateRandom());
         const record: number = counter;
         let newCounter: number;
 
@@ -36,9 +33,8 @@ export default function GameScreen(props: GameScreenProps) {
                 "¡Has perdido!",
                 `Has fallado con ${record} aciertos.\n¡Vuelve a intentarlo!`
             );
-            if (props.user && props.user.record < record) {
-                _updateUserData({ record: record });
-                props.functionSetNewRecord(record);
+            if (user && user.record < record) {
+                setUser({ ...user, record: record });
             }
 
             props.functionFinishGame();
