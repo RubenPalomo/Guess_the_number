@@ -1,9 +1,9 @@
 import React from "react";
 import { View, Text, StyleSheet } from "react-native";
-import { useUser } from '../context/UserContext';
+import { useUser } from "../context/UserContext";
 
 export default function Header() {
-    const { user, setUser, fetchUser } = useUser();
+    const { user } = useUser();
 
     return (
         <View style={styles.headerContainer}>
@@ -19,8 +19,10 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         justifyContent: "center",
         alignContent: "center",
-        height: 80,
+        minHeight: 50,
         backgroundColor: "#670000",
+        marginTop: "8%",
+        borderWidth: 3,
     },
     headerText: {
         flex: 1,

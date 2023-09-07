@@ -94,6 +94,7 @@ const styles = StyleSheet.create({
         marginVertical: "50%",
         width: "90%",
         borderRadius: 20,
+        marginTop: "60%",
     },
     rowContainer: {
         flexDirection: "row",

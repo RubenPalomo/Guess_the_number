@@ -26,11 +26,9 @@ export default function App() {
                             backgroundColor: "#404040",
                             shadowRadius: 5,
                         },
-                        headerTitleStyle: { fontSize: 25 },
-                        headerStyle: { backgroundColor: "#404040" },
-                        headerTintColor: "gold",
                         tabBarInactiveTintColor: "#B99C00",
                         tabBarActiveTintColor: "gold",
+                        header: () => <Header />,
                     }}
                 >
                     <BottomTab.Screen
@@ -38,7 +36,6 @@ export default function App() {
                         component={Ranking}
                         options={{
                             title: "Ranking",
-                            header: Header,
                             tabBarActiveTintColor: "#404040",
                             tabBarIcon: (props) => (
                                 <FontAwesome5
@@ -60,8 +57,6 @@ export default function App() {
                         component={MainScreen}
                         options={{
                             title: "Jugar",
-                            headerTitle: "Guess the number!",
-                            header: Header,
                             tabBarActiveTintColor: "#404040",
                             tabBarIcon: (props) => (
                                 <Entypo
@@ -83,7 +78,6 @@ export default function App() {
                         component={Profile}
                         options={{
                             title: "Mi perfil",
-                            header: Header,
                             tabBarActiveTintColor: "#404040",
                             tabBarIcon: (props) => (
                                 <Ionicons
@@ -101,7 +95,7 @@ export default function App() {
                         }}
                     />
                 </BottomTab.Navigator>
-                <StatusBar style="auto" />
+                <StatusBar backgroundColor="#670000" style="light" />
             </NavigationContainer>
         </UserProvider>
     );

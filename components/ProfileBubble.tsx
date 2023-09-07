@@ -12,11 +12,6 @@ export default function ProfileBubble(props: {
     const isSound = props.tag === "Sonido";
     const [isSoundOn, setIsSoundOn] = useState<boolean>(props.sound === true);
 
-    useEffect(() => {
-        setIsSoundOn(props.sound === true);
-    }),
-        [props.sound];
-
     const handlePressNameOption = (): void => {
         if (props.functionChangeModalVisibility)
             props.functionChangeModalVisibility();
@@ -32,6 +27,11 @@ export default function ProfileBubble(props: {
     const handlePress = (): void => {
         isSound ? handlePressSoundOption() : handlePressNameOption();
     };
+
+    useEffect(() => {
+        setIsSoundOn(props.sound === true);
+    }),
+        [props.sound];
 
     return (
         <View style={styles.bubbleContainer}>

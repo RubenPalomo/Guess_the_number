@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import { Text, StyleSheet, View, Pressable } from "react-native";
+import { Text, StyleSheet, View } from "react-native";
 import { useUser } from "../context/UserContext";
-import User from "../types/User";
+import IUser from "../types/IUser";
 import BackgroundBeauty from "../components/BackgroundBeauty";
 import ProfileBubble from "../components/ProfileBubble";
 import TitleTextStyle from "../components/TitleTextStyle";
@@ -16,7 +16,7 @@ export default function Profile() {
 
     const handleSave = (): void => {
         if (user) {
-            const updatedUser: User = {
+            const updatedUser: IUser = {
                 ...user,
                 name: username,
                 soundsOn: sound,
@@ -77,6 +77,7 @@ const styles = StyleSheet.create({
         alignItems: "center",
         justifyContent: "center",
         width: "100%",
+        marginTop: "10%",
     },
     profileTitleContainer: {
         flex: 1,

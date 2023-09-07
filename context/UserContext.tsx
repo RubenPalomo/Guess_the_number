@@ -1,11 +1,11 @@
 import React, { createContext, useContext, useState, useEffect } from "react";
 import { _retrieveUserData } from "../memory/InternalDataManager";
-import User from "../types/User";
+import IUser from "../types/IUser";
 import SendAlert from "../app-functions/SendAlert";
 
 type UserContextType = {
-    user: User | null;
-    setUser: (user: User | null) => void;
+    user: IUser | null;
+    setUser: (user: IUser | null) => void;
     fetchUser: () => Promise<void>;
 };
 
@@ -14,7 +14,7 @@ const UserContext = createContext<UserContextType | undefined>(undefined);
 export const UserProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
-    const [user, setUser] = useState<User | null>(null);
+    const [user, setUser] = useState<IUser | null>(null);
 
     const fetchUser = async () => {
         try {

@@ -1,55 +1,36 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Text, StyleSheet, View, ScrollView } from "react-native";
 import BackgroundBeauty from "../components/BackgroundBeauty";
 import RankingElement from "../components/RankingElement";
-import Player from "../types/Player";
+import IPlayer from "../types/IPlayer";
 import TitleTextStyle from "../components/TitleTextStyle";
+import { getTopPlayers } from "../memory/MongoDBManager";
 
 export default function Ranking() {
-    const example: Player[] = [
-        {
-            token: "1234",
-            name: "Manolito",
-            record: 24,
-        },
-        {
-            token: "1234",
-            name: "Sarandonga",
-            record: 8,
-        },
-        {
-            token: "1234",
-            name: "Juanito",
-            record: 6,
-        },
-        {
-            token: "1234",
-            name: "Pedrito",
-            record: 2,
-        },
-        {
-            token: "1234",
-            name: "Topo madre",
-            record: 16,
-        },
-        {
-            token: "1234",
-            name: "Sarita",
-            record: 13,
-        },
-    ];
-    const sortedExample = [...example].sort((a, b) => b.record - a.record);
+    const [topPlayers, setTopPlayers] = useState<IPlayer[]>([]);
+
+    useEffect(() => {
+        getTopPlayers()
+            .then((response) => {
+                console.log(response);
+                setTopPlayers(response);
+            })
+            .catch((error) => {
+                setTopPlayers([]);
+                console.log(`Error getting data from MongoDB: ${error}`);
+            });
+    }, []);
 
     return (
         <BackgroundBeauty
             screen={
-                <View style={styles.container}>
+                <View style={styles.rankingContainer}>
                     <View style={styles.rankingTitleContainer}>
                         <Text style={styles.rankingTitle}>TOP PLAYERS</Text>
                     </View>
                     <ScrollView style={styles.recordContainer}>
-                        <RankingElement playerInfo={example[0]} ranking={0} />
-                        {sortedExample.slice(1).map((element, index) => (
+                        <RankingElement playerInfo={null} ranking={0} />
+                        {topPlayers.map((element, index) => (
                             <RankingElement
                                 playerInfo={element}
                                 ranking={index + 1}
@@ -64,11 +45,12 @@ export default function Ranking() {
 }
 
 const styles = StyleSheet.create({
-    container: {
+    rankingContainer: {
         flex: 1,
         alignItems: "center",
         justifyContent: "center",
         width: "100%",
+        marginTop: "5%",
     },
     recordContainer: {
         flex: 5 / 6,

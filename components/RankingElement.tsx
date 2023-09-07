@@ -1,10 +1,10 @@
 import React from "react";
 import { View, Text, StyleSheet } from "react-native";
 import { FontAwesome5 } from "@expo/vector-icons";
-import Player from "../types/Player";
+import IPlayer from "../types/IPlayer";
 
 export default function RankingElement(props: {
-    playerInfo: Player;
+    playerInfo: IPlayer | null;
     ranking: number;
 }) {
     if (props.ranking === 0)
@@ -21,6 +21,7 @@ export default function RankingElement(props: {
                 <Text style={styles.rankingTitle}>Puntos</Text>
             </View>
         );
+
     return (
         <View style={styles.rankingElementContainer}>
             {props.ranking === 1 ? (
@@ -32,9 +33,9 @@ export default function RankingElement(props: {
             )}
 
             <Text style={[styles.rankingText, { flex: 3 }]}>
-                {props.playerInfo.name}
+                {props.playerInfo?.name}
             </Text>
-            <Text style={styles.rankingText}>{props.playerInfo.record}</Text>
+            <Text style={styles.rankingText}>{props.playerInfo?.record}</Text>
         </View>
     );
 }

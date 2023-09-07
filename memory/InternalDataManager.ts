@@ -1,11 +1,11 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import SendAlert from "../app-functions/SendAlert";
-import User from "../types/User";
+import IUser from "../types/IUser";
 
-export const _retrieveUserData = async (): Promise<User> => {
+export const _retrieveUserData = async (): Promise<IUser> => {
     try {
         const storedData = await AsyncStorage.getItem("UserGuessTheNumber");
-        let user: User;
+        let user: IUser;
 
         if (storedData !== null) user = JSON.parse(storedData);
         else {
@@ -25,7 +25,7 @@ export const _retrieveUserData = async (): Promise<User> => {
     }
 };
 
-export const _storeUserData = async (dataToStore: User) => {
+export const _storeUserData = async (dataToStore: IUser) => {
     try {
         await AsyncStorage.setItem(
             "UserGuessTheNumber",
@@ -36,13 +36,13 @@ export const _storeUserData = async (dataToStore: User) => {
     }
 };
 
-export const _updateUserData = async (updatedUser: Partial<User>) => {
+export const _updateUserData = async (updatedUser: Partial<IUser>) => {
     try {
         const storedData = await AsyncStorage.getItem("UserGuessTheNumber");
 
         if (storedData !== null) {
-            const storedUser: User = JSON.parse(storedData);
-            const updatedData: User = { ...storedUser, ...updatedUser };
+            const storedUser: IUser = JSON.parse(storedData);
+            const updatedData: IUser = { ...storedUser, ...updatedUser };
 
             await AsyncStorage.setItem(
                 "UserGuessTheNumber",
