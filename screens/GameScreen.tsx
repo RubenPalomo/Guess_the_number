@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Text, StyleSheet, View } from "react-native";
+import { Text, StyleSheet, View, Image } from "react-native";
 import { useUser } from "../context/UserContext";
 import BackgroundBeauty from "../components/BackgroundBeauty";
 import GameScreenButton from "../components/GameScreenButton";
@@ -10,10 +10,24 @@ interface GameScreenProps {
 }
 
 export default function GameScreen(props: GameScreenProps) {
-    const { user, setUser } = useUser();
+    const { user, setUserAndStore } = useUser();
     const [counter, setCounter] = useState<number>(0);
+    const [lives, setLives] = useState<number>(3);
     const generateRandom = () => Math.floor(Math.random() * 100) + 1;
     const [number, setNumber] = useState<number>(generateRandom());
+
+    const gameOver = (record: number) => {
+        SendAlert(
+            "¡Has perdido!",
+            `Has fallado con ${record} aciertos.\n¡Vuelve a intentarlo!`
+        );
+        if (user && user.record < record) {
+            setUserAndStore({ ...user, record: record });
+        }
+
+        setCounter(0);
+        props.functionFinishGame();
+    };
 
     const handlePress = (symbol: string): void => {
         const newNumber: number = Math.floor(generateRandom());
@@ -29,18 +43,10 @@ export default function GameScreen(props: GameScreenProps) {
             : (newCounter = 0);
 
         if (newCounter === 0) {
-            SendAlert(
-                "¡Has perdido!",
-                `Has fallado con ${record} aciertos.\n¡Vuelve a intentarlo!`
-            );
-            if (user && user.record < record) {
-                setUser({ ...user, record: record });
-            }
+            if (lives === 0) gameOver(record);
+            setLives(lives - 1);
+        } else setCounter(newCounter);
 
-            props.functionFinishGame();
-        }
-
-        setCounter(newCounter);
         setNumber(newNumber);
     };
 
@@ -76,6 +82,18 @@ export default function GameScreen(props: GameScreenProps) {
                                     handlePress("+");
                                 }}
                             />
+                        </View>
+                    </View>
+                    <View style={styles.livesContainer}>
+                        <Text style={styles.livesText}>Lives:</Text>
+                        <View style={styles.heartsContainer}>
+                            {[...Array(lives)].map((_, index) => (
+                                <Image
+                                    key={index}
+                                    source={require("../assets/heart.png")}
+                                    style={styles.heartImage}
+                                />
+                            ))}
                         </View>
                     </View>
                 </View>
@@ -138,5 +156,27 @@ const styles = StyleSheet.create({
         color: "gold",
         fontSize: 15,
         margin: 5,
+    },
+    livesContainer: {
+        flex: 1,
+        position: "absolute",
+        top: -170,
+        left: 0,
+        backgroundColor: "#670000",
+        padding: 10,
+        borderWidth: 2,
+        borderRadius: 10,
+    },
+    heartsContainer: {
+        flexDirection: "row",
+        margin: 5,
+        minHeight: 25,
+    },
+    heartImage: {
+        width: 25,
+        height: 25,
+    },
+    livesText: {
+        color: "gold",
     },
 });

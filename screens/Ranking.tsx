@@ -9,17 +9,16 @@ import { getTopPlayers } from "../memory/MongoDBManager";
 export default function Ranking() {
     const [topPlayers, setTopPlayers] = useState<IPlayer[]>([]);
 
-    useEffect(() => {
-        getTopPlayers()
-            .then((response) => {
-                console.log(response);
-                setTopPlayers(response);
-            })
-            .catch((error) => {
-                setTopPlayers([]);
-                console.log(`Error getting data from MongoDB: ${error}`);
-            });
-    }, []);
+    // useEffect(() => {
+    //     getTopPlayers()
+    //         .then((response) => {
+    //             console.log(response);
+    //         })
+    //         .catch((error) => {
+    //             setTopPlayers([]);
+    //             console.log(`Error getting data from MongoDB: ${error}`);
+    //         });
+    // }, []);
 
     return (
         <BackgroundBeauty

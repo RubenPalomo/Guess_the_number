@@ -9,7 +9,7 @@ import ChangeNameModal from "../components/ChangeNameModal";
 import AppButton from "../components/AppButton";
 
 export default function Profile() {
-    const { user, setUser } = useUser();
+    const { user, setUserAndStore } = useUser();
     const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
     const [username, setUsername] = useState<string>(user?.name ?? "???");
     const [sound, setSound] = useState<boolean>(user?.soundsOn ?? true);
@@ -21,7 +21,7 @@ export default function Profile() {
                 name: username,
                 soundsOn: sound,
             };
-            setUser(updatedUser);
+            setUserAndStore(updatedUser);
         }
     };
 

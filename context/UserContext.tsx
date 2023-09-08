@@ -1,18 +1,21 @@
 import React, { createContext, useContext, useState, useEffect } from "react";
-import { _retrieveUserData } from "../memory/InternalDataManager";
+import {
+    _retrieveUserData,
+    _storeUserData,
+} from "../memory/InternalDataManager";
+import { setEnabledSound } from "../app-functions/PlaySound";
 import IUser from "../types/IUser";
 import SendAlert from "../app-functions/SendAlert";
 
 type UserContextType = {
     user: IUser | null;
-    setUser: (user: IUser | null) => void;
-    fetchUser: () => Promise<void>;
+    setUserAndStore: (user: IUser | null) => void;
 };
 
 const UserContext = createContext<UserContextType | undefined>(undefined);
 
 export const UserProvider: React.FC<{ children: React.ReactNode }> = ({
-  children,
+    children,
 }) => {
     const [user, setUser] = useState<IUser | null>(null);
 
@@ -20,8 +23,17 @@ export const UserProvider: React.FC<{ children: React.ReactNode }> = ({
         try {
             const storedUser = await _retrieveUserData();
             setUser(storedUser);
+            setEnabledSound(storedUser.soundsOn);
         } catch (error: any) {
             SendAlert("Error fetching user:", error.toString());
+        }
+    };
+
+    const setUserAndStore = (newUser: IUser | null) => {
+        setUser(newUser);
+
+        if (newUser) {
+            _storeUserData(newUser);
         }
     };
 
@@ -30,7 +42,7 @@ export const UserProvider: React.FC<{ children: React.ReactNode }> = ({
     }, []);
 
     return (
-        <UserContext.Provider value={{ user, setUser, fetchUser }}>
+        <UserContext.Provider value={{ user, setUserAndStore }}>
             {children}
         </UserContext.Provider>
     );

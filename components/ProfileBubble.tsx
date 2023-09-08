@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Text, StyleSheet, View, Pressable } from "react-native";
-import { PlaySound } from "../app-functions/PlaySound";
+import { PlaySound, setEnabledSound } from "../app-functions/PlaySound";
 
 export default function ProfileBubble(props: {
     tag: string;
@@ -21,6 +21,7 @@ export default function ProfileBubble(props: {
         if (props.functionChangeSound) {
             props.functionChangeSound(!isSoundOn);
             setIsSoundOn(!isSoundOn);
+            setEnabledSound(!isSoundOn);
         }
     };
 

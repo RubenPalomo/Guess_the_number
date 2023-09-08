@@ -9,14 +9,14 @@ import AppButton from "../components/AppButton";
 import SendAlert from "../app-functions/SendAlert";
 
 export default function MainScreen() {
-    const { user, setUser } = useUser();
+    const { user, setUserAndStore } = useUser();
     const [isGameStarted, setIsGameStarted] = useState<boolean>(false);
 
     const handleStart = (): void => {
         if (user === null) return;
         if (user.stamina > 0) {
             setIsGameStarted(true);
-            setUser({ ...user, stamina: user.stamina - 1 });
+            setUserAndStore({ ...user, stamina: user.stamina - 1 });
         } else SendAlert("¡Sin estamina!", "No tienes suficiente estamina");
     };
 

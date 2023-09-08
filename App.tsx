@@ -8,6 +8,7 @@ import MainScreen from "./screens/MainScreen";
 import Ranking from "./screens/Ranking";
 import Profile from "./screens/Profile";
 import Header from "./components/Header";
+
 export default function App() {
     const BottomTab = createBottomTabNavigator();
 

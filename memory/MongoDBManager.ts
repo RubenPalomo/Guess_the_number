@@ -1,52 +1,54 @@
-import mongoose, { Model, Schema } from "mongoose";
-import IPlayer from "../types/IPlayer";
+import Realm from 'realm';
+import IPlayer from '../types/IPlayer';
 
-mongoose.connect("YOUR-MONGODB-TOKEN");
+const playerSchema = {
+  name: 'Player',
+  properties: {
+    token: 'string',
+    name: 'string',
+    record: 'int',
+  },
+  primaryKey: 'token',
+};
 
-const db = mongoose.connection;
-db.on("error", (err) => {
-    console.error(`Error with the MongoDB connection: ${err}`);
-});
-db.once("open", () => {
-    console.log("Connected to MongoDB!");
-});
+const app = new Realm.App({ id: 'your-realm-app-id' });
 
-const playerSchema = new Schema<IPlayer>({
-    token: String,
-    name: String,
-    record: Number,
-});
+const config = {
+  schema: [playerSchema],
+  sync: {
+    user: app.currentUser,
+    partitionValue: 'YOUR_PARTITION_KEY',
+    newRealmFileBehavior: {
+      type: 'openImmediately',
+    },
+  },
+};
 
-const MPlayer: Model<IPlayer> = mongoose.model("Player", playerSchema);
+const getTopPlayers = async () => {
+  const realm = await Realm.open(config);
 
-async function getTopPlayers(): Promise<IPlayer[]> {
-    try {
-        const players = await MPlayer.find().sort({ record: -1 }).limit(20);
-        return players;
-    } catch (error) {
-        throw new Error(`Error getting the data: ${error}`);
-    }
-}
+  const players = realm
+    .objects('Player')
+    .sorted('record', true)
+    .slice(0, 20);
 
-async function savePlayerData(player: IPlayer): Promise<void> {
-    const token: string = player.token;
-    const playerName: string = player.name;
-    const playerRecord: number = player.record;
-    try {
-        const existingPlayer = await MPlayer.findOne({ token });
+  return players.map((player) => ({
+    token: player.token,
+    name: player.name,
+    record: player.record,
+  }));
+};
 
-        if (existingPlayer) {
-            existingPlayer.name = playerName;
-            existingPlayer.record = playerRecord;
-            await existingPlayer.save();
-        } else {
-            const newPlayer = new MPlayer(player);
+const savePlayerData = async (player: IPlayer) => {
+  const realm = await Realm.open(config);
 
-            await newPlayer.save();
-        }
-    } catch (error) {
-        throw new Error(`Error al almacenar los datos del jugador: ${error}`);
-    }
-}
+  try {
+    realm.write(() => {
+      realm.create('Player', player, Realm.UpdateMode.Modified);
+    });
+  } catch (error) {
+    console.error('Error saving player data: ', error);
+  }
+};
 
 export { getTopPlayers, savePlayerData };
