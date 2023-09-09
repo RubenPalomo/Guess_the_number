@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { StatusBar } from "expo-status-bar";
 import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
@@ -10,6 +10,7 @@ import Profile from "./screens/Profile";
 import Header from "./components/Header";
 
 export default function App() {
+    const [currentTime, setCurrentTime] = useState<Date>(new Date());
     const BottomTab = createBottomTabNavigator();
 
     return (
@@ -29,7 +30,12 @@ export default function App() {
                         },
                         tabBarInactiveTintColor: "#B99C00",
                         tabBarActiveTintColor: "gold",
-                        header: () => <Header />,
+                        header: () => (
+                            <Header
+                                currentTime={currentTime}
+                                setCurrentTime={setCurrentTime}
+                            />
+                        ),
                     }}
                 >
                     <BottomTab.Screen

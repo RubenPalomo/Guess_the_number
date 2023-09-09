@@ -4,7 +4,6 @@ let isSoundEnabled: boolean = true;
 
 export function setEnabledSound(soundEnabled: boolean) {
     isSoundEnabled = soundEnabled;
-    console.log(isSoundEnabled);
 }
 
 export async function PlaySound(

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { View, Text, StyleSheet, BackHandler } from "react-native";
 import * as Animatable from "react-native-animatable";
 import { useUser } from "../context/UserContext";
@@ -7,6 +7,7 @@ import BackgroundBeauty from "../components/BackgroundBeauty";
 import TitleTextStyle from "../components/TitleTextStyle";
 import AppButton from "../components/AppButton";
 import SendAlert from "../app-functions/SendAlert";
+import StaminaRecharge from "../background/StaminaRecharge";
 
 export default function MainScreen() {
     const { user, setUserAndStore } = useUser();
@@ -19,6 +20,10 @@ export default function MainScreen() {
             setUserAndStore({ ...user, stamina: user.stamina - 1 });
         } else SendAlert("¡Sin estamina!", "No tienes suficiente estamina");
     };
+
+    useEffect(() => {
+        StaminaRecharge({ user, setUserAndStore });
+    }, []);
 
     return isGameStarted ? (
         <GameScreen functionFinishGame={() => setIsGameStarted(false)} />
