@@ -71,12 +71,13 @@ const styles = StyleSheet.create({
         alignItems: "center",
         justifyContent: "center",
         width: "100%",
+        marginTop: "20%",
     },
     mainTitleContainer: {
         flex: 1,
         padding: 10,
         width: "100%",
-        marginTop: "15%",
+        marginTop: "5%",
     },
     mainTitle: {
         ...TitleTextStyle.TitleTextStyle,

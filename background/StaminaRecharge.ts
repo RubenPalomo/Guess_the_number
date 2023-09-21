@@ -1,5 +1,6 @@
 import * as BackgroundFetch from "expo-background-fetch";
 import * as TaskManager from "expo-task-manager";
+import { schedulePushNotification } from "../app-functions/PushNotificationsManager";
 import IUser from "../types/IUser";
 
 interface staminaRechargeProps {
@@ -9,12 +10,19 @@ interface staminaRechargeProps {
 
 const BACKGROUND_FETCH_TASK = "countdown_stamina";
 const stamineRecharge = (props: staminaRechargeProps) => {
-    props.user && props.user.stamina < 50
-        ? props.setUserAndStore({
-              ...props.user,
-              stamina: props.user.stamina + 1,
-          })
-        : BackgroundFetch.unregisterTaskAsync(BACKGROUND_FETCH_TASK);
+    if (props.user && props.user.stamina < 50)
+        props.setUserAndStore({
+            ...props.user,
+            stamina: props.user.stamina + 1,
+        });
+    else {
+        schedulePushNotification(
+            "¡Estamina llena!",
+            "Tienes la estamina hasta arriba. ¡Ven y gástala!",
+            0
+        );
+        BackgroundFetch.unregisterTaskAsync(BACKGROUND_FETCH_TASK);
+    }
 };
 
 export default async function createStaminaBackgroundFunction(

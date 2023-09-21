@@ -23,7 +23,7 @@ export default function ChangeNameModal(props: ChangeNameModalProps) {
         else if (textToSave !== "") {
             props.changeModalVisibility();
             props.changeNameFunction(textToSave);
-            setTextInputValue(textToSave);
+            setTextInputValue("");
         }
     };
 

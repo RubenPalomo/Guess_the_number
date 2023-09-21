@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { StatusBar } from "expo-status-bar";
 import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { Entypo, FontAwesome5, Ionicons } from "@expo/vector-icons";
+import * as Notifications from "expo-notifications";
 import { UserProvider } from "./context/UserContext";
 import MainScreen from "./screens/MainScreen";
 import Ranking from "./screens/Ranking";
@@ -12,6 +13,22 @@ import Header from "./components/Header";
 export default function App() {
     const [currentTime, setCurrentTime] = useState<Date>(new Date());
     const BottomTab = createBottomTabNavigator();
+    const getNewDate = () => {
+        const newDate = new Date();
+        setCurrentTime(newDate);
+        return newDate;
+    };
+
+    useEffect(() => {
+        const notificationListener =
+            Notifications.addNotificationReceivedListener((notification) => {
+                //console.log("Notification received:", notification);
+            });
+
+        return () => {
+            Notifications.removeNotificationSubscription(notificationListener);
+        };
+    }, []);
 
     return (
         <UserProvider>
@@ -30,12 +47,6 @@ export default function App() {
                         },
                         tabBarInactiveTintColor: "#B99C00",
                         tabBarActiveTintColor: "gold",
-                        header: () => (
-                            <Header
-                                currentTime={currentTime}
-                                setCurrentTime={setCurrentTime}
-                            />
-                        ),
                     }}
                 >
                     <BottomTab.Screen
@@ -44,6 +55,7 @@ export default function App() {
                         options={{
                             title: "Ranking",
                             tabBarActiveTintColor: "#404040",
+                            headerShown: false,
                             tabBarIcon: (props) => (
                                 <FontAwesome5
                                     name="crown"
@@ -65,6 +77,12 @@ export default function App() {
                         options={{
                             title: "Jugar",
                             tabBarActiveTintColor: "#404040",
+                            header: () => (
+                                <Header
+                                    currentTime={currentTime}
+                                    getNewDate={getNewDate}
+                                />
+                            ),
                             tabBarIcon: (props) => (
                                 <Entypo
                                     name="game-controller"
@@ -86,6 +104,7 @@ export default function App() {
                         options={{
                             title: "Mi perfil",
                             tabBarActiveTintColor: "#404040",
+                            headerShown: false,
                             tabBarIcon: (props) => (
                                 <Ionicons
                                     name="person"

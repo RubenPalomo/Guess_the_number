@@ -50,7 +50,7 @@ export default function Profile() {
                             }}
                         />
                     </View>
-                    <View style={styles.profileTitleContainer}>
+                    <View style={styles.profileSaveButtonContainer}>
                         <AppButton
                             textButton="Guardar cambios"
                             functionButton={handleSave}
@@ -87,8 +87,13 @@ const styles = StyleSheet.create({
         marginTop: "6%",
     },
     profileBubbleContainer: {
-        flex: 2,
+        flex: 3,
         width: "100%",
-        marginBottom: "20%",
+        maxHeight: "40%",
+        marginBottom: "10%",
+    },
+    profileSaveButtonContainer: {
+        flex: 1,
+        marginBottom: "10%",
     },
 });

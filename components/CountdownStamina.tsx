@@ -5,30 +5,41 @@ import { useUser } from "../context/UserContext";
 
 interface countdownStaminaProps {
     currentTime: Date;
-    setCurrentTime: React.Dispatch<React.SetStateAction<Date>>;
     activate: boolean;
+    deactivateCountdown: () => void;
+    getNewDate: () => Date;
 }
 
 export default function CountdownStamina(props: countdownStaminaProps) {
     const { user, setUserAndStore } = useUser();
-    const getFutureDate = () =>
-        new Date(props.currentTime.getTime() + 10 * 60 * 1000);
+    const [countdownIntervalId, setCountdownIntervalId] =
+        useState<NodeJS.Timeout | null>();
+    const [futureDateTime, setFutureDateTime] = useState<number>(
+        props.currentTime.getTime() + 1 * 60 * 1000
+    );
     const [timeRemaining, setTimeRemaining] = useState<number>(
-        getFutureDate().getTime() - props.currentTime.getTime()
+        futureDateTime - props.currentTime.getTime()
     );
     const minutes: number = Math.floor((timeRemaining / 1000 / 60) % 60);
     const seconds: number = Math.floor((timeRemaining / 1000) % 60);
     const [timeIcon, setTimeIcon] = useState<React.JSX.Element>(
-        <MaterialCommunityIcons name="timer-sand" size={18} color="white" />
+        <MaterialCommunityIcons name="timer-sand" size={10} color="white" />
     );
-    let intervalId: NodeJS.Timeout | null;
+
+    const handleCountdownCompletion = () => {
+        console.log(user);
+        if (user && user.stamina < 50)
+            setUserAndStore({ ...user, stamina: user.stamina + 1 });
+    };
 
     const createTimer = (): NodeJS.Timeout | null => {
-        if (props.activate === false) return null;
+        if (!props.activate) return null;
+
+        setFutureDateTime(props.getNewDate().getTime() + 1 * 60 * 1000);
 
         const intervalId = setInterval(() => {
             const timeDifference: number =
-                getFutureDate().getTime() - new Date().getTime();
+                futureDateTime - new Date().getTime();
 
             setTimeRemaining(timeDifference);
 
@@ -36,25 +47,23 @@ export default function CountdownStamina(props: countdownStaminaProps) {
                 ? setTimeIcon(
                       <MaterialCommunityIcons
                           name="timer-sand"
-                          size={10}
+                          size={12}
                           color="white"
                       />
                   )
                 : setTimeIcon(
                       <MaterialCommunityIcons
                           name="timer-sand-complete"
-                          size={10}
+                          size={12}
                           color="white"
                       />
                   );
 
             if (timeDifference <= 0) {
-                if (user) {
-                    if (user.stamina < 50) props.setCurrentTime(new Date());
-                    setUserAndStore({ ...user, stamina: user.stamina + 1 });
-                }
-
                 clearInterval(intervalId);
+                handleCountdownCompletion();
+                setCountdownIntervalId(null);
+                props.deactivateCountdown();
                 return null;
             }
         }, 1000);
@@ -63,17 +72,18 @@ export default function CountdownStamina(props: countdownStaminaProps) {
     };
 
     useEffect(() => {
-        if (intervalId !== null) intervalId = createTimer();
+        if (!countdownIntervalId && props.activate)
+            setCountdownIntervalId(createTimer());
 
         return () => {
-            if (intervalId) {
-                clearInterval(intervalId);
-                intervalId = null;
+            if (countdownIntervalId) {
+                clearInterval(countdownIntervalId);
+                setCountdownIntervalId(null);
             }
         };
     }, [props.activate]);
 
-    return props.activate === false || minutes === 10 ? (
+    return props.activate === false || minutes === 10 || minutes < 0 ? (
         <View style={styles.counterContainer} />
     ) : (
         <View style={styles.counterContainer}>
@@ -98,8 +108,8 @@ const styles = StyleSheet.create({
         flex: 1,
         flexDirection: "row",
         position: "absolute",
-        bottom: -2,
-        right: 0,
+        bottom: "5%",
+        right: "8%",
     },
     counterElementContainer: {
         justifyContent: "center",
@@ -109,6 +119,6 @@ const styles = StyleSheet.create({
     counterText: {
         color: "white",
         textAlign: "center",
-        fontSize: 10,
+        fontSize: 12,
     },
 });

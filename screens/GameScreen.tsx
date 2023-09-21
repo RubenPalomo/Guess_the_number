@@ -109,10 +109,10 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         borderWidth: 3,
         backgroundColor: "#670000",
-        marginVertical: "50%",
+        marginVertical: "40%",
         width: "90%",
         borderRadius: 20,
-        marginTop: "60%",
+        marginTop: "80%",
     },
     rowContainer: {
         flexDirection: "row",
@@ -170,6 +170,7 @@ const styles = StyleSheet.create({
     heartsContainer: {
         flexDirection: "row",
         margin: 5,
+        minWidth: "22%",
         minHeight: 25,
     },
     heartImage: {
