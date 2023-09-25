@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Text, StyleSheet, View, Pressable } from "react-native";
 import { PlaySound, setEnabledSound } from "../app-functions/PlaySound";
+import { colors } from "../constants/colors";
 
 export default function ProfileBubble(props: {
     tag: string;
@@ -77,7 +78,7 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         borderWidth: 2,
         borderRadius: 20,
-        backgroundColor: "#670000",
+        backgroundColor: colors.mainColor,
         padding: 20,
         width: "80%",
     },

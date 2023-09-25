@@ -5,6 +5,7 @@ import RankingElement from "../components/RankingElement";
 import IPlayer from "../types/IPlayer";
 import TitleTextStyle from "../components/TitleTextStyle";
 import { getTopPlayers } from "../memory/MongoDBManager";
+import { colors } from "../constants/colors";
 
 export default function Ranking() {
     const [topPlayers, setTopPlayers] = useState<IPlayer[]>([]);
@@ -53,7 +54,7 @@ const styles = StyleSheet.create({
     },
     recordContainer: {
         flex: 5 / 6,
-        backgroundColor: "#670000",
+        backgroundColor: colors.mainColor,
         borderWidth: 5,
         borderColor: "gold",
         width: "80%",

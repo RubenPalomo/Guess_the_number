@@ -9,15 +9,10 @@ import MainScreen from "./screens/MainScreen";
 import Ranking from "./screens/Ranking";
 import Profile from "./screens/Profile";
 import Header from "./components/Header";
+import { colors } from "./constants/colors";
 
 export default function App() {
-    const [currentTime, setCurrentTime] = useState<Date>(new Date());
     const BottomTab = createBottomTabNavigator();
-    const getNewDate = () => {
-        const newDate = new Date();
-        setCurrentTime(newDate);
-        return newDate;
-    };
 
     useEffect(() => {
         const notificationListener =
@@ -42,11 +37,11 @@ export default function App() {
                         tabBarAllowFontScaling: true,
                         tabBarStyle: {
                             height: 100,
-                            backgroundColor: "#404040",
+                            backgroundColor: colors.darkgrey,
                             shadowRadius: 5,
                         },
-                        tabBarInactiveTintColor: "#B99C00",
-                        tabBarActiveTintColor: "gold",
+                        tabBarInactiveTintColor: colors.fadedGold,
+                        tabBarActiveTintColor: colors.darkgrey,
                     }}
                 >
                     <BottomTab.Screen
@@ -54,13 +49,12 @@ export default function App() {
                         component={Ranking}
                         options={{
                             title: "Ranking",
-                            tabBarActiveTintColor: "#404040",
                             headerShown: false,
                             tabBarIcon: (props) => (
                                 <FontAwesome5
                                     name="crown"
                                     size={props.focused ? 50 : 40}
-                                    color={props.focused ? "gold" : "#B99C00"}
+                                    color={props.focused ? "gold" : colors.fadedGold}
                                     style={
                                         props.focused && {
                                             elevation: 28,
@@ -76,18 +70,12 @@ export default function App() {
                         component={MainScreen}
                         options={{
                             title: "Jugar",
-                            tabBarActiveTintColor: "#404040",
-                            header: () => (
-                                <Header
-                                    currentTime={currentTime}
-                                    getNewDate={getNewDate}
-                                />
-                            ),
+                            header: () => <Header />,
                             tabBarIcon: (props) => (
                                 <Entypo
                                     name="game-controller"
                                     size={props.focused ? 90 : 80}
-                                    color={props.focused ? "gold" : "#B99C00"}
+                                    color={props.focused ? "gold" : colors.fadedGold}
                                     style={
                                         props.focused && {
                                             elevation: 28,
@@ -103,13 +91,12 @@ export default function App() {
                         component={Profile}
                         options={{
                             title: "Mi perfil",
-                            tabBarActiveTintColor: "#404040",
                             headerShown: false,
                             tabBarIcon: (props) => (
                                 <Ionicons
                                     name="person"
                                     size={props.focused ? 50 : 40}
-                                    color={props.focused ? "gold" : "#B99C00"}
+                                    color={props.focused ? "gold" : colors.fadedGold}
                                     style={
                                         props.focused && {
                                             elevation: 28,
@@ -121,7 +108,7 @@ export default function App() {
                         }}
                     />
                 </BottomTab.Navigator>
-                <StatusBar backgroundColor="#670000" style="light" />
+                <StatusBar backgroundColor={colors.mainColor} style="light" />
             </NavigationContainer>
         </UserProvider>
     );

@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Modal, View, Text, TextInput, StyleSheet } from "react-native";
 import AppButton from "./AppButton";
 import SendAlert from "../app-functions/SendAlert";
+import { colors } from "../constants/colors";
 
 interface ChangeNameModalProps {
     isModalVisible: boolean;
@@ -72,7 +73,7 @@ const styles = StyleSheet.create({
     },
     modalContent: {
         flex: 1,
-        backgroundColor: "#670000",
+        backgroundColor: colors.mainColor,
         padding: 20,
         borderRadius: 10,
         borderWidth: 1,

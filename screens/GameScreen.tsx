@@ -4,6 +4,7 @@ import { useUser } from "../context/UserContext";
 import BackgroundBeauty from "../components/BackgroundBeauty";
 import GameScreenButton from "../components/GameScreenButton";
 import SendAlert from "../app-functions/SendAlert";
+import { colors } from "../constants/colors";
 
 interface GameScreenProps {
     functionFinishGame: () => void;
@@ -108,7 +109,7 @@ const styles = StyleSheet.create({
         alignItems: "center",
         justifyContent: "center",
         borderWidth: 3,
-        backgroundColor: "#670000",
+        backgroundColor: colors.mainColor,
         marginVertical: "40%",
         width: "90%",
         borderRadius: 20,
@@ -145,7 +146,7 @@ const styles = StyleSheet.create({
         position: "absolute",
         top: -180,
         right: 0,
-        backgroundColor: "#670000",
+        backgroundColor: colors.mainColor,
         borderWidth: 2,
         borderRadius: 10,
         padding: 10,
@@ -162,7 +163,7 @@ const styles = StyleSheet.create({
         position: "absolute",
         top: -170,
         left: 0,
-        backgroundColor: "#670000",
+        backgroundColor: colors.mainColor,
         padding: 10,
         borderWidth: 2,
         borderRadius: 10,

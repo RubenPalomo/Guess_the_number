@@ -3,20 +3,21 @@ import { View, Text, StyleSheet } from "react-native";
 import { Entypo, MaterialCommunityIcons } from "@expo/vector-icons";
 import { useUser } from "../context/UserContext";
 import CountdownStamina from "./CountdownStamina";
+import { colors } from "../constants/colors";
 
-interface headerProps {
-    currentTime: Date;
-    getNewDate: () => Date;
-}
-
-export default function Header(props: headerProps) {
+export default function Header() {
     const { user } = useUser();
+    const getNewDate = () => new Date().getTime() + 1 * 30 * 1000;
+    const [currentTime, setCurrentTime] = useState<number>(getNewDate());
     const [activateCountdown, setActivateCountdown] = useState<boolean>(
         user?.stamina ? user.stamina < 50 : false
     );
 
     useEffect(() => {
-        if (user) setActivateCountdown(user.stamina < 50);
+        if (user && !activateCountdown) {
+            setCurrentTime(getNewDate());
+            setActivateCountdown(user.stamina < 50);
+        }
     }, [user]);
 
     return (
@@ -42,8 +43,7 @@ export default function Header(props: headerProps) {
                 </Text>
             </View>
             <CountdownStamina
-                currentTime={props.currentTime}
-                getNewDate={props.getNewDate}
+                deadlineDate={currentTime}
                 activate={activateCountdown}
                 deactivateCountdown={() => setActivateCountdown(false)}
             />
@@ -56,7 +56,7 @@ const styles = StyleSheet.create({
         flex: 1,
         flexDirection: "row",
         minHeight: 75,
-        backgroundColor: "#670000",
+        backgroundColor: colors.mainColor,
         marginTop: "9%",
         borderWidth: 3,
     },

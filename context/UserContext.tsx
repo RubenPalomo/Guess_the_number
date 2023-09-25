@@ -10,6 +10,7 @@ import SendAlert from "../app-functions/SendAlert";
 type UserContextType = {
     user: IUser | null;
     setUserAndStore: (user: IUser | null) => void;
+    regenerateStamina: () => void;
 };
 
 const UserContext = createContext<UserContextType | undefined>(undefined);
@@ -19,7 +20,7 @@ export const UserProvider: React.FC<{ children: React.ReactNode }> = ({
 }) => {
     const [user, setUser] = useState<IUser | null>(null);
 
-    const fetchUser = async () => {
+    const fetchUser = async (): Promise<void> => {
         try {
             const storedUser = await _retrieveUserData();
             setUser(storedUser);
@@ -29,11 +30,19 @@ export const UserProvider: React.FC<{ children: React.ReactNode }> = ({
         }
     };
 
-    const setUserAndStore = (newUser: IUser | null) => {
+    const setUserAndStore = (newUser: IUser | null): void => {
         setUser(newUser);
 
         if (newUser) {
             _storeUserData(newUser);
+        }
+    };
+
+    const regenerateStamina = (): void => {
+        if (user) {
+            const updatedUser = { ...user, stamina: user.stamina + 1 };
+            console.log(updatedUser);
+            setUserAndStore(updatedUser);
         }
     };
 
@@ -42,7 +51,9 @@ export const UserProvider: React.FC<{ children: React.ReactNode }> = ({
     }, []);
 
     return (
-        <UserContext.Provider value={{ user, setUserAndStore }}>
+        <UserContext.Provider
+            value={{ user, setUserAndStore, regenerateStamina }}
+        >
             {children}
         </UserContext.Provider>
     );
