@@ -3,7 +3,7 @@ import { Text, StyleSheet, View, Image } from "react-native";
 import { useUser } from "../context/UserContext";
 import BackgroundBeauty from "../components/BackgroundBeauty";
 import GameScreenButton from "../components/GameScreenButton";
-import SendAlert from "../app-functions/SendAlert";
+import SendAlert from "../util/SendAlert";
 import { colors } from "../constants/colors";
 
 interface GameScreenProps {

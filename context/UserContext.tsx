@@ -3,9 +3,9 @@ import {
     _retrieveUserData,
     _storeUserData,
 } from "../memory/InternalDataManager";
-import { setEnabledSound } from "../app-functions/PlaySound";
+import { setEnabledSound } from "../util/PlaySound";
 import IUser from "../types/IUser";
-import SendAlert from "../app-functions/SendAlert";
+import SendAlert from "../util/SendAlert";
 
 type UserContextType = {
     user: IUser | null;

@@ -1,6 +1,6 @@
 import React from "react";
 import { Pressable, View, Text, StyleSheet } from "react-native";
-import { PlaySound } from "../app-functions/PlaySound";
+import { PlaySound } from "../util/PlaySound";
 
 export default function AppButton(props: {
     textButton: string;

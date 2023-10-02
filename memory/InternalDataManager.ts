@@ -1,5 +1,5 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import SendAlert from "../app-functions/SendAlert";
+import SendAlert from "../util/SendAlert";
 import IUser from "../types/IUser";
 
 export const _retrieveUserData = async (): Promise<IUser> => {

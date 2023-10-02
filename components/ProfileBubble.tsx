@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Text, StyleSheet, View, Pressable } from "react-native";
-import { PlaySound, setEnabledSound } from "../app-functions/PlaySound";
+import { PlaySound, setEnabledSound } from "../util/PlaySound";
 import { colors } from "../constants/colors";
 
 export default function ProfileBubble(props: {

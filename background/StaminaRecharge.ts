@@ -1,6 +1,6 @@
 import * as BackgroundFetch from "expo-background-fetch";
 import * as TaskManager from "expo-task-manager";
-import { schedulePushNotification } from "../app-functions/PushNotificationsManager";
+import { schedulePushNotification } from "../util/PushNotificationsManager";
 import IUser from "../types/IUser";
 
 interface staminaRechargeProps {

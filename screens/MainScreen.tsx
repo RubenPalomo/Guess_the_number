@@ -6,7 +6,7 @@ import GameScreen from "./GameScreen";
 import BackgroundBeauty from "../components/BackgroundBeauty";
 import TitleTextStyle from "../components/TitleTextStyle";
 import AppButton from "../components/AppButton";
-import SendAlert from "../app-functions/SendAlert";
+import SendAlert from "../util/SendAlert";
 import StaminaRecharge from "../background/StaminaRecharge";
 
 export default function MainScreen() {

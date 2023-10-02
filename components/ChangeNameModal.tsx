@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Modal, View, Text, TextInput, StyleSheet } from "react-native";
 import AppButton from "./AppButton";
-import SendAlert from "../app-functions/SendAlert";
+import SendAlert from "../util/SendAlert";
 import { colors } from "../constants/colors";
 
 interface ChangeNameModalProps {
