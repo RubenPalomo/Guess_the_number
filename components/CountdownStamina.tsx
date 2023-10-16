@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { View, Text, StyleSheet } from "react-native";
-import IUser from "../types/IUser";
 import CountdownIcon from "./CountdownIcon";
 import { useUser } from "../context/UserContext";
 
@@ -12,6 +11,7 @@ interface countdownStaminaProps {
 
 export default function CountdownStamina(props: countdownStaminaProps) {
     const { regenerateStamina } = useUser();
+    const [isCounterFinalized, setIsCounterFinalized] = useState<boolean>(false);
     const [countdownIntervalId, setCountdownIntervalId] =
         useState<NodeJS.Timeout | null>();
     const [timeRemaining, setTimeRemaining] = useState<number>(
@@ -25,6 +25,7 @@ export default function CountdownStamina(props: countdownStaminaProps) {
 
     const createTimer = (): NodeJS.Timeout | null => {
         const intervalId = setInterval(() => {
+            setIsCounterFinalized(false);
             const timeDifference: number =
                 props.deadlineDate - new Date().getTime();
 
@@ -42,7 +43,7 @@ export default function CountdownStamina(props: countdownStaminaProps) {
                 clearInterval(intervalId);
                 setCountdownIntervalId(null);
                 props.deactivateCountdown();
-                regenerateStamina();
+                setIsCounterFinalized(true);
             }
         }, 1000);
 
@@ -60,6 +61,10 @@ export default function CountdownStamina(props: countdownStaminaProps) {
             }
         };
     }, [props.activate]);
+
+    useEffect(() => {
+        if (isCounterFinalized === true) regenerateStamina();
+    }, [isCounterFinalized]);
 
     return props.activate && minutes < 10 && seconds > 0 ? (
         <View style={styles.counterContainer}>

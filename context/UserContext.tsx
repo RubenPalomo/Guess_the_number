@@ -41,7 +41,6 @@ export const UserProvider: React.FC<{ children: React.ReactNode }> = ({
     const regenerateStamina = (): void => {
         if (user) {
             const updatedUser = { ...user, stamina: user.stamina + 1 };
-            console.log(updatedUser);
             setUserAndStore(updatedUser);
         }
     };
