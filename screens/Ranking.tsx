@@ -4,22 +4,17 @@ import BackgroundBeauty from "../components/BackgroundBeauty";
 import RankingElement from "../components/RankingElement";
 import IPlayer from "../types/IPlayer";
 import TitleTextStyle from "../components/TitleTextStyle";
-import { getTopPlayers } from "../memory/MongoDBManager";
+import { getTopPlayers } from "../util/http";
 import { colors } from "../constants/colors";
 
 export default function Ranking() {
     const [topPlayers, setTopPlayers] = useState<IPlayer[]>([]);
 
-    // useEffect(() => {
-    //     getTopPlayers()
-    //         .then((response) => {
-    //             console.log(response);
-    //         })
-    //         .catch((error) => {
-    //             setTopPlayers([]);
-    //             console.log(`Error getting data from MongoDB: ${error}`);
-    //         });
-    // }, []);
+    useEffect(() => {
+        const fetchData = async (): Promise<void> =>
+            setTopPlayers(await getTopPlayers());
+        fetchData();
+    }, []);
 
     return (
         <BackgroundBeauty

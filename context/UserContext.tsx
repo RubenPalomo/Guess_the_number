@@ -2,7 +2,7 @@ import React, { createContext, useContext, useState, useEffect } from "react";
 import {
     _retrieveUserData,
     _storeUserData,
-} from "../memory/InternalDataManager";
+} from "../util/InternalDataManager";
 import { setEnabledSound } from "../util/PlaySound";
 import IUser from "../types/IUser";
 import SendAlert from "../util/SendAlert";

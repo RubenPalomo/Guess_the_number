@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import { StatusBar } from "expo-status-bar";
 import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
@@ -54,7 +54,11 @@ export default function App() {
                                 <FontAwesome5
                                     name="crown"
                                     size={props.focused ? 50 : 40}
-                                    color={props.focused ? "gold" : colors.fadedGold}
+                                    color={
+                                        props.focused
+                                            ? "gold"
+                                            : colors.fadedGold
+                                    }
                                     style={
                                         props.focused && {
                                             elevation: 28,
@@ -75,7 +79,11 @@ export default function App() {
                                 <Entypo
                                     name="game-controller"
                                     size={props.focused ? 90 : 80}
-                                    color={props.focused ? "gold" : colors.fadedGold}
+                                    color={
+                                        props.focused
+                                            ? "gold"
+                                            : colors.fadedGold
+                                    }
                                     style={
                                         props.focused && {
                                             elevation: 28,
@@ -96,7 +104,11 @@ export default function App() {
                                 <Ionicons
                                     name="person"
                                     size={props.focused ? 50 : 40}
-                                    color={props.focused ? "gold" : colors.fadedGold}
+                                    color={
+                                        props.focused
+                                            ? "gold"
+                                            : colors.fadedGold
+                                    }
                                     style={
                                         props.focused && {
                                             elevation: 28,

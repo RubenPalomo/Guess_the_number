@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Text, StyleSheet, View, Image } from "react-native";
 import { useUser } from "../context/UserContext";
+import { updatePlayer } from "../util/http";
 import BackgroundBeauty from "../components/BackgroundBeauty";
 import GameScreenButton from "../components/GameScreenButton";
 import SendAlert from "../util/SendAlert";
@@ -27,6 +28,7 @@ export default function GameScreen(props: GameScreenProps) {
         }
 
         setCounter(0);
+        if (user) updatePlayer(user);
         props.functionFinishGame();
     };
 
