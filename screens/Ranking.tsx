@@ -1,5 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { Text, StyleSheet, View, ScrollView } from "react-native";
+import {
+    Text,
+    StyleSheet,
+    View,
+    ScrollView,
+    ActivityIndicator,
+} from "react-native";
 import BackgroundBeauty from "../components/BackgroundBeauty";
 import RankingElement from "../components/RankingElement";
 import IPlayer from "../types/IPlayer";
@@ -32,6 +38,13 @@ export default function Ranking() {
                                 key={index}
                             />
                         ))}
+                        {topPlayers.length === 0 && (
+                            <ActivityIndicator
+                                size="large"
+                                color="#0000ff"
+                                style={styles.waiting}
+                            />
+                        )}
                     </ScrollView>
                 </View>
             }
@@ -65,5 +78,8 @@ const styles = StyleSheet.create({
     },
     rankingTitle: {
         ...TitleTextStyle.TitleTextStyle,
+    },
+    waiting: {
+        marginTop: "50%",
     },
 });
