@@ -1,8 +1,10 @@
 import axios, { AxiosResponse } from "axios";
-import { API_URL } from "@env";
 import { getToken } from "./getToken";
 import IPlayer from "../types/IPlayer";
 import IUser from "../types/IUser";
+
+const ENV_DATA: any = process.env.APP_MANIFEST;
+const API_URL: string = ENV_DATA.extra.env.API_URL;
 
 const getPlayer = (token: string, user: IUser): IPlayer => {
     return {
@@ -25,16 +27,16 @@ export async function updatePlayer(user: IUser): Promise<void> {
     if (token) {
         const player: IPlayer = getPlayer(token, user);
 
-        axios
-            .put(API_URL + `/edit/player/${token}`, player)
-            .catch((err) => {
-                if (err.response.status === 404) createPlayer(player);
-            });
+        axios.put(API_URL + `/edit/player/${token}`, player).catch((err) => {
+            if (err.response.status === 404) createPlayer(player);
+        });
     }
 }
 
 export async function getTopPlayers() {
-    const response: AxiosResponse<any, any> = await axios.get(API_URL + "/players");
+    const response: AxiosResponse<any, any> = await axios.get(
+        API_URL + "/players"
+    );
     const players: IPlayer[] = [];
 
     for (const key in response.data) {
