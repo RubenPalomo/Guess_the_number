@@ -2,9 +2,7 @@ import axios, { AxiosResponse } from "axios";
 import { getToken } from "./getToken";
 import IPlayer from "../types/IPlayer";
 import IUser from "../types/IUser";
-
-const ENV_DATA: any = process.env.APP_MANIFEST;
-const API_URL: string = ENV_DATA.extra.env.API_URL;
+import { API_URL } from "@env";
 
 const getPlayer = (token: string, user: IUser): IPlayer => {
     return {
