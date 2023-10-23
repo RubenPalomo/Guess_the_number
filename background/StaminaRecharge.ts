@@ -2,6 +2,7 @@ import * as BackgroundFetch from "expo-background-fetch";
 import * as TaskManager from "expo-task-manager";
 import { schedulePushNotification } from "../util/PushNotificationsManager";
 import IUser from "../types/IUser";
+import SendAlert from "../util/SendAlert";
 
 interface staminaRechargeProps {
     user: IUser | null;
@@ -31,8 +32,8 @@ export default async function createStaminaBackgroundFunction(
     TaskManager.defineTask(BACKGROUND_FETCH_TASK, async () => {
         try {
             stamineRecharge(props);
-        } catch (error) {
-            console.log(error);
+        } catch (error: any) {
+            SendAlert("Error", error.toString());
             return BackgroundFetch.BackgroundFetchResult.Failed;
         }
         return BackgroundFetch.BackgroundFetchResult.NewData;

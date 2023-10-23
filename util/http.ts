@@ -1,8 +1,9 @@
 import axios, { AxiosResponse } from "axios";
 import { getToken } from "./getToken";
+import { API_URL } from "@env";
 import IPlayer from "../types/IPlayer";
 import IUser from "../types/IUser";
-import { API_URL } from "@env";
+import SendAlert from "./SendAlert";
 
 const getPlayer = (token: string, user: IUser): IPlayer => {
     return {
@@ -15,8 +16,7 @@ const getPlayer = (token: string, user: IUser): IPlayer => {
 async function createPlayer(player: IPlayer) {
     axios
         .post(API_URL + "/add/player", player)
-        .then((response: any) => console.log(response))
-        .catch((err) => console.error(err));
+        .catch((err) => SendAlert("Error", err));
 }
 
 export async function updatePlayer(user: IUser): Promise<void> {

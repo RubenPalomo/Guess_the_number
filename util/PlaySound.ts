@@ -1,4 +1,5 @@
 import { Audio, AVPlaybackSource } from "expo-av";
+import SendAlert from "./SendAlert";
 
 let isSoundEnabled: boolean = true;
 
@@ -19,6 +20,6 @@ export async function PlaySound(
         await soundObject.playAsync();
         soundObject.setIsLoopingAsync(playInLoop);
     } catch (error) {
-        console.error("Error while playing sound:", error);
+        SendAlert("Error", `Error while playing sound: ${error}`);
     }
 }

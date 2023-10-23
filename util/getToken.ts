@@ -1,6 +1,7 @@
 import * as Notifications from "expo-notifications";
 import * as Device from "expo-device";
 import { Platform } from "react-native";
+import SendAlert from "./SendAlert";
 
 export const getToken = async () => {
     let token: string = "";
@@ -23,12 +24,12 @@ export const getToken = async () => {
             finalStatus = status;
         }
         if (finalStatus !== "granted") {
-            alert("Failed to get token!");
+            SendAlert("Error", "Failed to get token!");
             return;
         }
         token = (await Notifications.getExpoPushTokenAsync()).data;
     } else {
-        alert("Must use physical device for Push Notifications");
+        SendAlert("Error", "Must use physical device for Push Notifications");
     }
 
     return token;
