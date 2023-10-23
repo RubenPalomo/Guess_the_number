@@ -9,13 +9,13 @@
         "splash": {
             "image": "./assets/splash.png",
             "resizeMode": "contain",
-            "backgroundColor": "#ffffff"
+            "backgroundColor": "#FEFFEA"
         },
         "assetBundlePatterns": ["**/*"],
         "android": {
             "adaptiveIcon": {
                 "foregroundImage": "./assets/icon.png",
-                "backgroundColor": "#ffffff"
+                "backgroundColor": "#858585"
             },
             "package": "com.rubenpf.GuessTheNumber"
         },

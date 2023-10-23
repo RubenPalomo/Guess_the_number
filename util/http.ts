@@ -31,7 +31,7 @@ export async function updatePlayer(user: IUser): Promise<void> {
     }
 }
 
-export async function getTopPlayers() {
+export async function getTopPlayers(): Promise<IPlayer[]> {
     const response: AxiosResponse<any, any> = await axios.get(
         API_URL + "/players"
     );

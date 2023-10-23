@@ -23,7 +23,7 @@ export const getToken = async () => {
             finalStatus = status;
         }
         if (finalStatus !== "granted") {
-            alert("Failed to get push token for push notification!");
+            alert("Failed to get token!");
             return;
         }
         token = (await Notifications.getExpoPushTokenAsync()).data;

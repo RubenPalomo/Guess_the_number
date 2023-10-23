@@ -5,21 +5,26 @@ import {
     View,
     ScrollView,
     ActivityIndicator,
+    Pressable,
 } from "react-native";
+import { getTopPlayers } from "../util/http";
+import { colors } from "../constants/colors";
 import BackgroundBeauty from "../components/BackgroundBeauty";
 import RankingElement from "../components/RankingElement";
 import IPlayer from "../types/IPlayer";
 import TitleTextStyle from "../components/TitleTextStyle";
-import { getTopPlayers } from "../util/http";
-import { colors } from "../constants/colors";
+import AppButton from "../components/AppButton";
 
 export default function Ranking() {
     const [topPlayers, setTopPlayers] = useState<IPlayer[]>([]);
 
+    const refreshScore = async (): Promise<void> => {
+        setTopPlayers([]);
+        setTopPlayers(await getTopPlayers());
+    };
+
     useEffect(() => {
-        const fetchData = async (): Promise<void> =>
-            setTopPlayers(await getTopPlayers());
-        fetchData();
+        refreshScore();
     }, []);
 
     return (
@@ -46,6 +51,12 @@ export default function Ranking() {
                             />
                         )}
                     </ScrollView>
+                    <View style={styles.refreshButtonContainer}>
+                        <AppButton
+                            textButton="Refresh"
+                            functionButton={refreshScore}
+                        />
+                    </View>
                 </View>
             }
         />
@@ -81,5 +92,9 @@ const styles = StyleSheet.create({
     },
     waiting: {
         marginTop: "50%",
+    },
+    refreshButtonContainer: {
+        marginTop: "-18%",
+        marginBottom: "2%",
     },
 });
