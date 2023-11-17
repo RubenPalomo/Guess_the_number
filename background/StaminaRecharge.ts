@@ -10,6 +10,7 @@ interface staminaRechargeProps {
 }
 
 const BACKGROUND_FETCH_TASK = "countdown_stamina";
+
 const stamineRecharge = (props: staminaRechargeProps) => {
     if (props.user && props.user.stamina < 50)
         props.setUserAndStore({

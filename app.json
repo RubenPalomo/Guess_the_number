@@ -1,7 +1,7 @@
 {
     "expo": {
-        "name": "Guess the number!",
-        "slug": "GuessTheNumber",
+        "name": "Guess the Next!",
+        "slug": "GuessTheNext",
         "version": "1.0.0",
         "orientation": "portrait",
         "icon": "./assets/icon.png",
@@ -17,7 +17,7 @@
                 "foregroundImage": "./assets/icon.png",
                 "backgroundColor": "#858585"
             },
-            "package": "com.rubenpf.GuessTheNumber"
+            "package": "com.rubenpf.GuessTheNext"
         },
         "web": {
             "favicon": "./assets/icon.png"

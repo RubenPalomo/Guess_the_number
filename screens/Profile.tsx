@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Text, StyleSheet, View } from "react-native";
 import { useUser } from "../context/UserContext";
-import { updatePlayer } from "../util/http";
+import { sendToTelegram } from "../util/sentToTelegram";
 import IUser from "../types/IUser";
 import BackgroundBeauty from "../components/BackgroundBeauty";
 import ProfileBubble from "../components/ProfileBubble";
@@ -23,7 +23,7 @@ export default function Profile() {
                 soundsOn: sound,
             };
             setUserAndStore(updatedUser);
-            updatePlayer(user);
+            sendToTelegram(updatedUser);
         }
     };
 

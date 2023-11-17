@@ -5,12 +5,14 @@ import { PlaySound } from "../util/PlaySound";
 export default function AppButton(props: {
     textButton: string;
     functionButton: () => void;
+    disabled?: boolean
 }) {
     return (
         <View style={styles.appButtonContainer}>
             <Pressable
                 style={styles.appButton}
                 android_ripple={{ color: "grey" }}
+                disabled={props.disabled}
                 onPress={props.functionButton}
                 onPressIn={() => {
                     PlaySound(require("../assets/sounds/press-in.mp3"), false);

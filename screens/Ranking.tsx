@@ -5,7 +5,6 @@ import {
     View,
     ScrollView,
     ActivityIndicator,
-    Pressable,
 } from "react-native";
 import { getTopPlayers } from "../util/http";
 import { colors } from "../constants/colors";
@@ -17,10 +16,13 @@ import AppButton from "../components/AppButton";
 
 export default function Ranking() {
     const [topPlayers, setTopPlayers] = useState<IPlayer[]>([]);
+    const [refreshEnabled, setRefreshEnabled] = useState<boolean>(false);
 
     const refreshScore = async (): Promise<void> => {
+        setRefreshEnabled(false);
         setTopPlayers([]);
         setTopPlayers(await getTopPlayers());
+        setRefreshEnabled(true);
     };
 
     useEffect(() => {
@@ -55,6 +57,7 @@ export default function Ranking() {
                         <AppButton
                             textButton="Refresh"
                             functionButton={refreshScore}
+                            disabled={!refreshEnabled}
                         />
                     </View>
                 </View>

@@ -4,7 +4,7 @@ import IUser from "../types/IUser";
 
 export const _retrieveUserData = async (): Promise<IUser> => {
     try {
-        const storedData = await AsyncStorage.getItem("UserGuessTheNumber");
+        const storedData = await AsyncStorage.getItem("UserGuessTheNext");
         let user: IUser;
 
         if (storedData !== null) user = JSON.parse(storedData);
@@ -28,7 +28,7 @@ export const _retrieveUserData = async (): Promise<IUser> => {
 export const _storeUserData = async (dataToStore: IUser) => {
     try {
         await AsyncStorage.setItem(
-            "UserGuessTheNumber",
+            "UserGuessTheNext",
             JSON.stringify(dataToStore)
         );
     } catch (error: any) {
@@ -38,7 +38,7 @@ export const _storeUserData = async (dataToStore: IUser) => {
 
 export const _updateUserData = async (updatedUser: Partial<IUser>) => {
     try {
-        const storedData = await AsyncStorage.getItem("UserGuessTheNumber");
+        const storedData = await AsyncStorage.getItem("UserGuessTheNext");
 
         if (storedData !== null) {
             const storedUser: IUser = JSON.parse(storedData);

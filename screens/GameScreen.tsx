@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Text, StyleSheet, View, Image } from "react-native";
 import { useUser } from "../context/UserContext";
-import { updatePlayer } from "../util/http";
+import { sendToTelegram } from "../util/sentToTelegram";
 import BackgroundBeauty from "../components/BackgroundBeauty";
 import GameScreenButton from "../components/GameScreenButton";
 import SendAlert from "../util/SendAlert";
@@ -28,7 +28,9 @@ export default function GameScreen(props: GameScreenProps) {
         }
 
         setCounter(0);
-        if (user) updatePlayer(user);
+        if (user && user.record < record)
+            sendToTelegram({ ...user, record: record });
+        else if (user) sendToTelegram(user);
         props.functionFinishGame();
     };
 

@@ -1,50 +1,41 @@
-import axios, { AxiosResponse } from "axios";
-import { getToken } from "./getToken";
-import { API_URL } from "@env";
+import axios from "axios";
+import base64 from "base-64";
+import { GITHUB_TOKEN, USERNAME, REPO, FILEPATH } from "@env";
 import IPlayer from "../types/IPlayer";
-import IUser from "../types/IUser";
 import SendAlert from "./SendAlert";
 
-const getPlayer = (token: string, user: IUser): IPlayer => {
-    return {
-        token: token,
-        name: user.name,
-        record: user.record,
-    };
+const API_URL: string = `https://api.github.com/repos/${USERNAME}/${REPO}/contents/${FILEPATH}`;
+
+const headers = {
+    Authorization: `token ${GITHUB_TOKEN}`,
 };
 
-async function createPlayer(player: IPlayer) {
-    axios
-        .post(API_URL + "/add/player", player)
-        .catch((err) => SendAlert("Error", err));
-}
-
-export async function updatePlayer(user: IUser): Promise<void> {
-    const token = await getToken();
-
-    if (token) {
-        const player: IPlayer = getPlayer(token, user);
-
-        axios.put(API_URL + `/edit/player/${token}`, player).catch((err) => {
-            if (err.response.status === 404) createPlayer(player);
-        });
-    }
-}
-
 export async function getTopPlayers(): Promise<IPlayer[]> {
-    const response: AxiosResponse<any, any> = await axios.get(
-        API_URL + "/players"
-    );
     const players: IPlayer[] = [];
 
-    for (const key in response.data) {
-        const player: IPlayer = {
-            token: response.data[key].token,
-            name: response.data[key].name,
-            record: response.data[key].record,
-        };
-        players.push(player);
-    }
+    await axios
+        .get(API_URL, {
+            headers: headers,
+        })
+        .then((response) => {
+            const data = response.data;
+            const content = JSON.parse(base64.decode(data.content));
 
-    return players;
+            content.players.forEach((element: any) => {
+                const player: IPlayer = {
+                    token: element.token,
+                    name: element.name,
+                    record: element.record,
+                };
+                players.push(player);
+            });
+        })
+        .catch((error) => SendAlert("Error", error));
+
+    return players
+        .sort(
+            (a: { record: number }, b: { record: number }) =>
+                b.record - a.record
+        )
+        .slice(0, 20);
 }

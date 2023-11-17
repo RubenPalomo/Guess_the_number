@@ -7,7 +7,7 @@ import { colors } from "../constants/colors";
 
 export default function Header() {
     const { user } = useUser();
-    const getNewDate = () => new Date().getTime() + 1 * 30 * 1000;
+    const getNewDate = () => new Date().getTime() + 10 * 60 * 1000;
     const [currentTime, setCurrentTime] = useState<number>(getNewDate());
     const [activateCountdown, setActivateCountdown] = useState<boolean>(
         user?.stamina ? user.stamina < 50 : false

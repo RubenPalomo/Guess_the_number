@@ -32,7 +32,7 @@ export default function MainScreen() {
             screen={
                 <View style={styles.mainContainer}>
                     <View style={styles.mainTitleContainer}>
-                        <Text style={styles.mainTitle}>Guess the number!</Text>
+                        <Text style={styles.mainTitle}>Guess the next!</Text>
                     </View>
                     <View style={styles.mainSubtitleContainer}>
                         <Animatable.Text
