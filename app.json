@@ -1,31 +1,33 @@
 {
-    "expo": {
-        "name": "Guess the Next!",
-        "slug": "GuessTheNext",
-        "version": "1.0.0",
-        "orientation": "portrait",
-        "icon": "./assets/icon.png",
-        "userInterfaceStyle": "light",
-        "splash": {
-            "image": "./assets/splash.png",
-            "resizeMode": "contain",
-            "backgroundColor": "#FEFFEA"
-        },
-        "assetBundlePatterns": ["**/*"],
-        "android": {
-            "adaptiveIcon": {
-                "foregroundImage": "./assets/icon.png",
-                "backgroundColor": "#858585"
-            },
-            "package": "com.rubenpf.GuessTheNext"
-        },
-        "web": {
-            "favicon": "./assets/icon.png"
-        },
-        "extra": {
-            "eas": {
-                "projectId": "c3dc4cee-98d1-4845-90b5-4fae69c068f0"
-            }
-        }
+  "expo": {
+    "name": "Guess the Next!",
+    "slug": "GuessTheNext",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "light",
+    "splash": {
+      "image": "./assets/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#FEFFEA"
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/icon.png",
+        "backgroundColor": "#858585"
+      },
+      "package": "com.rubenpf.GuessTheNext"
+    },
+    "web": {
+      "favicon": "./assets/icon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "6d15ce5b-1140-4599-8af6-37d50731ee38"
+      }
     }
+  }
 }

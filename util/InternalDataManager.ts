@@ -45,7 +45,7 @@ export const _updateUserData = async (updatedUser: Partial<IUser>) => {
             const updatedData: IUser = { ...storedUser, ...updatedUser };
 
             await AsyncStorage.setItem(
-                "UserGuessTheNumber",
+                "UserGuessTheNext",
                 JSON.stringify(updatedData)
             );
         }
