@@ -41,7 +41,7 @@ export default async function createStaminaBackgroundFunction(
     });
 
     BackgroundFetch.registerTaskAsync(BACKGROUND_FETCH_TASK, {
-        minimumInterval: 60 * 10,
+        minimumInterval: 60 * 5,
         startOnBoot: true,
         stopOnTerminate: false,
     });

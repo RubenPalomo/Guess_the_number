@@ -6,6 +6,7 @@ import BackgroundBeauty from "../components/BackgroundBeauty";
 import GameScreenButton from "../components/GameScreenButton";
 import SendAlert from "../util/SendAlert";
 import { colors } from "../constants/colors";
+import { PlaySound } from "../util/PlaySound";
 
 interface GameScreenProps {
     functionFinishGame: () => void;
@@ -19,18 +20,23 @@ export default function GameScreen(props: GameScreenProps) {
     const [number, setNumber] = useState<number>(generateRandom());
 
     const gameOver = (record: number) => {
-        SendAlert(
-            "¡Has perdido!",
-            `Has fallado con ${record} aciertos.\n¡Vuelve a intentarlo!`
-        );
         if (user && user.record < record) {
             setUserAndStore({ ...user, record: record });
-        }
+            sendToTelegram({ ...user, record: record });
+            SendAlert(
+                "Es un nuevo récord!",
+                `Has tenido ${record} aciertos.\n¡Sigue así!`
+            );
+
+            if (user.soundsOn)
+                PlaySound(require("../assets/sounds/kirby-victory.mp3"), false);
+        } else
+            SendAlert(
+                "¡Has perdido!",
+                `Has fallado con ${record} aciertos.\n¡Vuelve a intentarlo!`
+            );
 
         setCounter(0);
-        if (user && user.record < record)
-            sendToTelegram({ ...user, record: record });
-        else if (user) sendToTelegram(user);
         props.functionFinishGame();
     };
 
@@ -50,7 +56,11 @@ export default function GameScreen(props: GameScreenProps) {
         if (newCounter === 0) {
             if (lives === 0) gameOver(record);
             setLives(lives - 1);
-        } else setCounter(newCounter);
+        } else {
+            setCounter(newCounter);
+            if (user && user.soundsOn)
+                PlaySound(require("../assets/sounds/correct.mp3"), false);
+        }
 
         setNumber(newNumber);
     };
