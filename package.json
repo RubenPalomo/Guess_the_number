@@ -1,6 +1,6 @@
 {
     "name": "guessthenext",
-    "version": "1.0.1",
+    "version": "1.0.2",
     "main": "node_modules/expo/AppEntry.js",
     "scripts": {
         "start": "expo start",
@@ -9,7 +9,7 @@
         "web": "expo start --web"
     },
     "android": {
-        "versionCode": "1.0.1"
+        "versionCode": "1.0.2"
     },
     "dependencies": {
         "@expo/vector-icons": "^13.0.0",
