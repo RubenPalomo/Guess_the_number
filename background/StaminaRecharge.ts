@@ -5,14 +5,14 @@ import IUser from "../types/IUser";
 import SendAlert from "../util/SendAlert";
 
 interface staminaRechargeProps {
-    user: IUser | null;
+    user: IUser;
     setUserAndStore: (user: IUser) => void;
 }
 
 const BACKGROUND_FETCH_TASK = "countdown_stamina";
 
 const stamineRecharge = (props: staminaRechargeProps) => {
-    if (props.user && props.user.stamina < 50)
+    if (props.user.stamina < 50)
         props.setUserAndStore({
             ...props.user,
             stamina: props.user.stamina + 1,

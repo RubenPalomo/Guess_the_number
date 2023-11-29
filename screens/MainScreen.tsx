@@ -12,6 +12,7 @@ import StaminaRecharge from "../background/StaminaRecharge";
 export default function MainScreen() {
     const { user, setUserAndStore } = useUser();
     const [isGameStarted, setIsGameStarted] = useState<boolean>(false);
+    const [isBackgroundOn, setIsBackgroundOn] = useState<boolean>(false);
 
     const handleStart = (): void => {
         if (user === null) return;
@@ -22,8 +23,11 @@ export default function MainScreen() {
     };
 
     useEffect(() => {
-        StaminaRecharge({ user, setUserAndStore });
-    }, []);
+        if (user && !isBackgroundOn) {
+            StaminaRecharge({ user, setUserAndStore });
+            setIsBackgroundOn(true);
+        }
+    }, [user]);
 
     return isGameStarted ? (
         <GameScreen functionFinishGame={() => setIsGameStarted(false)} />
